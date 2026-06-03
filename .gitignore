@@ -1,3 +1,32 @@
+/.snakemake/
+/envs/
+!/envs/*.yaml
+!/envs/*.yml
+.snake*
+__pycache__/
+*.RData
+.Rhistory
+*.bw
+*.fna
+*.vcf
+*.sqlite
+*.tar.gz
+*.tgz
+
+# Local conda/micromamba envs
+/Users/
+
+# Data folders
+2-ClinVar/clinvar_db/
+3-Premature Stop/premature_stop/
+5-UniProt/uniprot_files/
+
+# Large outputs
+*.big
+9-Domain Counting/*.big
+
+# macOS
+.DS_Store
 .snakemake/
 envs/
 .snake*
