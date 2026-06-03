@@ -20,6 +20,14 @@ conda activate snakemake
 
 - Ensure `Rscript` and `python3` are available. To use per-rule conda environments, Snakemake will create the envs from the `envs/` YAML files.
 
+ExonCalculator requirement
+- This pipeline expects the ExonCalculator outputs to be present before running `Snakefile`'s first step. Please run ExonCalculator (https://github.com/haqueb2/ExonCalculator) and save its output files into the folder `1-Parse ExonCalculator/`:
+
+	- `ExonLength_output.csv`
+	- `CDS_output.csv`
+
+	The `parse_exoncalculator.R` script reads these files from `1-Parse ExonCalculator/` and produces `HAWKEYE_Database_Parse_ExonCalculator.csv` which is used by downstream rules.
+
 Running the full workflow
 
 From the repository root run:
