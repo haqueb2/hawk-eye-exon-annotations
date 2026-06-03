@@ -1,5 +1,6 @@
 .snakemake/
-/envs/
+/envs/*
+!/envs/
 !/envs/*.yaml
 !/envs/*.yml
 .snake*

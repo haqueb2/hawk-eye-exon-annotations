@@ -1,0 +1,22 @@
+name: hawkeye-r
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.2
+  - r-dplyr
+  - r-rlang
+  - r-readr
+  - r-stringr
+  - r-tidyr
+  - bioconductor-biostrings
+  - r-data.table
+  - r-httr
+  - r-jsonlite
+  - r-biocmanager
+  - bioconductor-biomart
+  - r-purrr
+  - r-dbplyr<2.4
+  - r-dbi
+  - r-rsqlite
