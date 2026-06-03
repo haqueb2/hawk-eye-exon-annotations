@@ -1,0 +1,14 @@
+.snakemake/
+envs/
+.snake*
+__pycache__/
+*.RData
+.Rhistory
+*.bw
+*.fna
+*.vcf
+*.sqlite
+2-ClinVar/clinvar_db/
+3-Premature Stop/premature_stop/
+5-UniProt/uniprot_files/
+9-Domain Counting/*.big

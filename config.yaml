@@ -1,0 +1,17 @@
+# Configuration for Snakemake-driven HAWK-EYE pipeline
+# Edit paths below if your data are stored elsewhere.
+
+paths:
+  parse_dir: "1-Parse ExonCalculator"
+  clinvar_dir: "2-ClinVar"
+  premature_stop_dir: "3-Premature Stop"
+  phylop_dir: "4-PhyloP"
+  uniprot_dir: "5-UniProt"
+  interpro_dir: "6-InterPro"
+  gtex_dir: "7-GTEx"
+  psi_dir: "8-PSI"
+  domain_count_dir: "9-Domain Counting"
+
+external_data:
+  clinvar_db_dir: "2-ClinVar/clinvar_db"
+  phylop_bigwig: "4-PhyloP/phylop/hg38.phyloP100way.bw"
