@@ -18,9 +18,13 @@ __pycache__/
 /Users/
 
 # Data folders
+1-Parse ExonCalculator/CDS_output.csv
+1-Parse ExonCalculator/ExonLength_output.csv
 2-ClinVar/clinvar_db/
+2-ClinVar/clinvar_LPP_variants*
 3-Premature Stop/premature_stop/
 5-UniProt/uniprot_files/
+HAWKEYE_Database_*
 
 # Large outputs
 *.big
@@ -28,3 +32,4 @@ __pycache__/
 
 # macOS
 .DS_Store
+._*
