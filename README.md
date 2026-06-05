@@ -9,6 +9,13 @@ Top-level steps (as implemented in the `Snakefile`):
 - `3-Premature Stop`: compute exon sequence features using CCDS with `exon_features.R`.
 - `4-PhyloP`: compute exon-level phyloP scores with `phylop_mean_conservation_score.py` (requires a phyloP bigWig in `4-PhyloP/phylop/`).
 - `5-UniProt` → `6-InterPro` → `7-GTEx` → `8-PSI` → `9-Domain Counting`: downstream annotation steps implemented as R scripts.
+-   `10-Exon Skipping Evaluation`: classify exons using the HAWK-EYE filtering framework. This directory contains:
+    -   `add_domain_repeat_flags.R`: adds protein-level domain and
+        repeat counts and generates functional-domain flag columns used
+        in exon classification.
+    -   `Filtering_HAWKEYE_Classifications.R`: applies the HAWK-EYE
+        classification criteria and generates the final exon
+        classification workbook.
 
 Prerequisites
 - Install Snakemake (recommended via conda or mamba):
@@ -46,14 +53,3 @@ snakemake '4-PhyloP/HAWKEYE_Database_PhyloP_Exon_Conservation.csv' --use-conda -
 
 Data availability notes
 - Large or restricted input files (ClinVar dumps, CCDS FASTA files, and the phyloP bigWig) are not included in this repository. Place them in the paths expected by the scripts: see `config.yaml` and the per-folder `clinvar_db/` and `phylop/` subdirectories.
-
-Next steps / recommendations
-- Validate the `Snakefile` on a small example dataset (or a subset of your data) using `-j 1`.
-- Consider adding a small example input set under `tests/data/` for CI.
-- Optionally add a GitHub Actions workflow that runs a tiny end-to-end example.
-
-If you want, I can:
-
-- refine the `Snakefile` to capture per-file parameterization and add per-rule logs,
-- add a small `tests/` example and a GitHub Actions CI workflow,
-- or create a `Dockerfile` for runtime encapsulation.
