@@ -13,6 +13,8 @@ __pycache__/
 *.sqlite
 *.tar.gz
 *.tgz
+HAWKEYE_Database_*
+*.xlsx
 
 # Local conda/micromamba envs
 /Users/
@@ -25,7 +27,6 @@ __pycache__/
 2-ClinVar/clinvar_LPP_variants*
 3-Premature Stop/premature_stop/
 5-UniProt/uniprot_files/
-HAWKEYE_Database_*
 
 # Large outputs
 *.big

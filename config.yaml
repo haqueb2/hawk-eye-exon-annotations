@@ -11,7 +11,9 @@ paths:
   gtex_dir: "7-GTEx"
   psi_dir: "8-PSI"
   domain_count_dir: "9-Domain Counting"
+  exon_skipping_eval_dir: "10-Exon Skipping Evaluation"
 
 external_data:
   clinvar_db_dir: "2-ClinVar/clinvar_db"
   phylop_bigwig: "4-PhyloP/phylop/hg38.phyloP100way.bw"
+  domain_repeat_lookup: "10-Exon Skipping Evaluation/lookup/domain_repeat_lookup.csv"

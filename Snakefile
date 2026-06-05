@@ -8,11 +8,13 @@ rule all:
         "2-ClinVar/HAWKEYE_Database_ClinVar_Counts.csv",
         "3-Premature Stop/HAWKEYE_Database_Exon_Features.csv",
         "4-PhyloP/HAWKEYE_Database_PhyloP_Exon_Conservation.csv",
-        "5-UniProt/HAWKEYE_Database_UniProt_All_Protein_Domain_Features.csv",
+        "5-UniProt/HAWKEYE_Database_UniProt_PTM_Other_Features.csv",
         "6-InterPro/HAWKEYE_Database_InterPro_Features.csv",
         "7-GTEx/HAWKEYE_Database_GTEx_Expression.csv",
         "8-PSI/HAWKEYE_Database_PSI.csv",
-        "9-Domain Counting/HAWKEYE_Database_Domain_Repeat_Counts.csv"
+        "9-Domain Counting/HAWKEYE_Database_Domain_Repeat_Counts.csv",
+        "10-Exon Skipping Evaluation/HAWKEYE_Database_Domain_Repeat_Counts_Flagged.csv",
+        "10-Exon Skipping Evaluation/HAWK-EYE_Database_Final_Filtered.xlsx"
 
 
 rule parse_exoncalculator:
@@ -84,19 +86,19 @@ rule protein_domain_annotation:
         "Rscript '5-UniProt/protein_domain_annotation.R' 'input_file=\"{input.uniprot_features}\"' 'output_file=\"{output}\"'"
 
 
-rule uniprot_features_step2:
+rule ptm_features:
     input:
-        exon_features="4-PhyloP/HAWKEYE_Database_PhyloP_Exon_Conservation.csv"
+        uniprot_features="5-UniProt/HAWKEYE_Database_UniProt_All_Protein_Domain_Features.csv"
     output:
-        "5-UniProt/HAWKEYE_Database_UniProt_Features_after_domains.csv"
+        "5-UniProt/HAWKEYE_Database_UniProt_PTM_Other_Features.csv"
     conda: "envs/r.yaml"
     shell:
-        "Rscript '5-UniProt/uniprot_features.R' 'input_file=\"{input.exon_features}\"' 'idmapping_file=\"5-UniProt/uniprot_files/HUMAN_9606_idmapping.dat\"' 'output_file=\"{output}\"'"
+        "Rscript '5-UniProt/ptm_annotation.R' 'input_file=\"{input.uniprot_features}\"' 'idmapping_file=\"5-UniProt/uniprot_files/HUMAN_9606_idmapping.dat\"' 'output_file=\"{output}\"'"
 
 
 rule interpro_annotation:
     input:
-        uniprot_all="5-UniProt/HAWKEYE_Database_UniProt_All_Protein_Domain_Features.csv"
+        uniprot_all="5-UniProt/HAWKEYE_Database_UniProt_PTM_Other_Features.csv"
     output:
         "6-InterPro/HAWKEYE_Database_InterPro_Features.csv"
     conda: "envs/r.yaml"
@@ -133,3 +135,29 @@ rule domain_counting:
     conda: "envs/r.yaml"
     shell:
         "Rscript '9-Domain Counting/uniprot_protein_domain_repeat_counting.R' 'input_file=\"{input.psi}\"' 'output_file=\"{output}\"' 'uniprot_all=\"{input.uniprot_all}\"'"
+
+
+rule domain_repeat_flagging:
+    input:
+        domain_count="9-Domain Counting/HAWKEYE_Database_Domain_Repeat_Counts.csv",
+        lookup="10-Exon Skipping Evaluation/lookup/domain_repeat_lookup.csv"
+    output:
+        "10-Exon Skipping Evaluation/HAWKEYE_Database_Domain_Repeat_Counts_Flagged.csv"
+    conda: "envs/r.yaml"
+    shell:
+        "Rscript '10-Exon Skipping Evaluation/add_domain_repeat_flags.R' "
+        "'input_file=\"{input.domain_count}\"' "
+        "'lookup_file=\"{input.lookup}\"' "
+        "'output_file=\"{output}\"'"
+
+
+rule final_filtered:
+    input:
+        domain_repeat_flagged="10-Exon Skipping Evaluation/HAWKEYE_Database_Domain_Repeat_Counts_Flagged.csv"
+    output:
+        "10-Exon Skipping Evaluation/HAWK-EYE_Database_Final_Filtered.xlsx"
+    conda: "envs/r.yaml"
+    shell:
+        "Rscript '10-Exon Skipping Evaluation/Filtering_HAWKEYE_Classifications.R' "
+        "'{input.domain_repeat_flagged}' "
+        "'{output}'"
